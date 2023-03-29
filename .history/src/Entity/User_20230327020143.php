@@ -84,6 +84,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $articles;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Avis::class, inversedBy="client")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $avis;
+
+    /**
      * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="client")
      */
     private $appointments;
@@ -93,17 +99,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $souscriptions;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Avis::class, mappedBy="client")
-     */
-    private $avis;
-
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->appointments = new ArrayCollection();
         $this->souscriptions = new ArrayCollection();
-        $this->avis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -321,6 +321,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getAvis(): ?Avis
+    {
+        return $this->avis;
+    }
+
+    public function setAvis(?Avis $avis): self
+    {
+        $this->avis = $avis;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Appointment>
      */
@@ -375,36 +387,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($souscription->getClient() === $this) {
                 $souscription->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Avis>
-     */
-    public function getAvis(): Collection
-    {
-        return $this->avis;
-    }
-
-    public function addAvi(Avis $avi): self
-    {
-        if (!$this->avis->contains($avi)) {
-            $this->avis[] = $avi;
-            $avi->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAvi(Avis $avi): self
-    {
-        if ($this->avis->removeElement($avi)) {
-            // set the owning side to null (unless already changed)
-            if ($avi->getClient() === $this) {
-                $avi->setClient(null);
             }
         }
 
