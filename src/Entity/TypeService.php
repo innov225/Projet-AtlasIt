@@ -39,6 +39,11 @@ class TypeService
      */
     private $appointments;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->services = new ArrayCollection();
@@ -149,6 +154,18 @@ class TypeService
                 $appointment->setTypeService(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
