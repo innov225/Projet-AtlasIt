@@ -40,12 +40,6 @@ class Avis
      */
     private $typeService;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="avis")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $client;
-
 
     public function getId(): ?int
     {
@@ -96,18 +90,6 @@ class Avis
     public function setTypeService(?TypeService $typeService): self
     {
         $this->typeService = $typeService;
-
-        return $this;
-    }
-
-    public function getClient(): ?User
-    {
-        return $this->client;
-    }
-
-    public function setClient(?User $client): self
-    {
-        $this->client = $client;
 
         return $this;
     }

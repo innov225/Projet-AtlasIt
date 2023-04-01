@@ -41,11 +41,14 @@ class Avis
     private $typeService;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="avis")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="avis")
      */
     private $client;
 
+    public function __construct()
+    {
+        $this->client = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -100,16 +103,33 @@ class Avis
         return $this;
     }
 
-    public function getClient(): ?User
+    /**
+     * @return Collection<int, User>
+     */
+    public function getClient(): Collection
     {
         return $this->client;
     }
 
-    public function setClient(?User $client): self
+    public function addClient(User $client): self
     {
-        $this->client = $client;
+        if (!$this->client->contains($client)) {
+            $this->client[] = $client;
+            $client->setAvis($this);
+        }
 
         return $this;
     }
 
+    public function removeClient(User $client): self
+    {
+        if ($this->client->removeElement($client)) {
+            // set the owning side to null (unless already changed)
+            if ($client->getAvis() === $this) {
+                $client->setAvis(null);
+            }
+        }
+
+        return $this;
+    }
 }
