@@ -18,6 +18,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegisterController extends AbstractController
 {
 
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * @Route("/inscription", name="app_inscription")
      */
@@ -90,13 +97,13 @@ class RegisterController extends AbstractController
 
 
     /**
-     * @Route("/confirmation-mail/{token}", name="app_confirm_email")
+     * @Route("/confirmationMail/{token}", name="app_confirm_email)
      */
-    public function confirmEmail(Request $request, UserRepository $userRepository): Response
+    public function confirmEmail(ManagerRegistry $doctrine, Request $request): Response
     {
         $token = $request->get('token');
 
-        $user = $userRepository->findOneBy(['confirmationToken' => $token]);
+        $user = $this->userRepository->findOneBy(['confirmationToken' => $token]);
 
         if (!$user) {
             throw $this->createNotFoundException('Cet utilisateur n\'existe pas ou n\'a pas été confirmé.');
@@ -104,12 +111,12 @@ class RegisterController extends AbstractController
 
         $user->setStatus(true);
         $user->setEmailConfirmationToken(null);
-        $entityManager = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $entityManager->flush();
 
         $this->addFlash('success', 'Votre compte a été confirmé. Vous pouvez maintenant vous connecter.');
 
-        return $this->redirectToRoute('app_confirmed');
+        return $this->redirectToRoute('app_inscription');
     }
 
     /**

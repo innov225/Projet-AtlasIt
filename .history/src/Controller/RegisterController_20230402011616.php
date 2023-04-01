@@ -18,6 +18,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegisterController extends AbstractController
 {
 
+    public function __construct(UrlGeneratorInterface $urlGenerator, UserRepository $userRepository)
+    {
+        $this->urlGenerator = $urlGenerator;
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * @Route("/inscription", name="app_inscription")
      */
@@ -90,9 +96,9 @@ class RegisterController extends AbstractController
 
 
     /**
-     * @Route("/confirmation-mail/{token}", name="app_confirm_email")
+     * @Route("/confirmationMail/{token}", name="app_confirm_email)
      */
-    public function confirmEmail(Request $request, UserRepository $userRepository): Response
+    public function confirmEmail(Request $request): Response
     {
         $token = $request->get('token');
 
@@ -109,7 +115,7 @@ class RegisterController extends AbstractController
 
         $this->addFlash('success', 'Votre compte a été confirmé. Vous pouvez maintenant vous connecter.');
 
-        return $this->redirectToRoute('app_confirmed');
+        return $this->redirectToRoute('app_inscription');
     }
 
     /**

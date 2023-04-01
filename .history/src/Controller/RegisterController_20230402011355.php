@@ -90,7 +90,7 @@ class RegisterController extends AbstractController
 
 
     /**
-     * @Route("/confirmation-mail/{token}", name="app_confirm_email")
+     * @Route("/confirmation_mail/{token}", name="app_confirm_email)
      */
     public function confirmEmail(Request $request, UserRepository $userRepository): Response
     {
@@ -109,7 +109,7 @@ class RegisterController extends AbstractController
 
         $this->addFlash('success', 'Votre compte a été confirmé. Vous pouvez maintenant vous connecter.');
 
-        return $this->redirectToRoute('app_confirmed');
+        return $this->redirectToRoute('app_inscription');
     }
 
     /**

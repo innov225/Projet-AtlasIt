@@ -90,7 +90,7 @@ class RegisterController extends AbstractController
 
 
     /**
-     * @Route("/confirmation-mail/{token}", name="app_confirm_email")
+     * @Route("/confirmation-mail/{token}", name="app_confirm_email)
      */
     public function confirmEmail(Request $request, UserRepository $userRepository): Response
     {
