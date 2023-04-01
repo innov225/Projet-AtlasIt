@@ -1,0 +1,11 @@
+framework:
+ mailer:
+        # Choisissez un transport adapté à votre situation.
+        # Le transport SMTP est recommandé pour une utilisation en production.
+        transport: smtp
+        host: 'smtp.gmail.com'
+        port: 587
+        encryption: tls
+        username: 'votre-adresse-gmail@gmail.com' # Remplacez par votre adresse Gmail
+        password: 'votre-mot-de-passe' # Remplacez par votre mot de passe Gmail
+        # Si vous utilisez un autre service de messagerie, vous devrez peut-être fournir des informations supplémentaires, comme une clé d'API ou des certificats.

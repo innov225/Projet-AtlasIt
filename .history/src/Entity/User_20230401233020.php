@@ -84,12 +84,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $articles;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Avis::class, inversedBy="client")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $avis;
-
-    /**
      * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="client")
      */
     private $appointments;
@@ -99,8 +93,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $souscriptions;
 
-<<<<<<< Updated upstream
-=======
     /**
      * @ORM\OneToMany(targetEntity=Avis::class, mappedBy="client")
      */
@@ -117,7 +109,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $isNotification;
     
 
->>>>>>> Stashed changes
     public function __construct()
     {
         // A la création d'un utilisateur les champs create et upload seront ajouté automatiquement
@@ -125,11 +116,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updateAt = new \DateTimeImmutable();
 
         // Mettre le statut a false au depart ce statut permet de savoir si l'email a été verifié ou pas
-        $this->status = false;
 
         $this->articles = new ArrayCollection();
         $this->appointments = new ArrayCollection();
         $this->souscriptions = new ArrayCollection();
+        $this->avis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -347,18 +338,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAvis(): ?Avis
-    {
-        return $this->avis;
-    }
-
-    public function setAvis(?Avis $avis): self
-    {
-        $this->avis = $avis;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Appointment>
      */
@@ -415,6 +394,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $souscription->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): self
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis[] = $avi;
+            $avi->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): self
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getClient() === $this) {
+                $avi->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEmailConfirmationToken(): ?string
+    {
+        return $this->emailConfirmationToken;
+    }
+
+    public function setEmailConfirmationToken(?string $emailConfirmationToken): self
+    {
+        $this->emailConfirmationToken = $emailConfirmationToken;
+
+        return $this;
+    }
+
+    public function isIsNotification(): ?bool
+    {
+        return $this->isNotification;
+    }
+
+    public function setIsNotification(?bool $isNotification): self
+    {
+        $this->isNotification = $isNotification;
 
         return $this;
     }
