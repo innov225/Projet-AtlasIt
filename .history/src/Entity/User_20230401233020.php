@@ -107,6 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isNotification;
+    
 
     public function __construct()
     {
@@ -115,7 +116,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updateAt = new \DateTimeImmutable();
 
         // Mettre le statut a false au depart ce statut permet de savoir si l'email a été verifié ou pas
-        $this->status = false;
 
         $this->articles = new ArrayCollection();
         $this->appointments = new ArrayCollection();

@@ -107,15 +107,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isNotification;
+    
 
     public function __construct()
     {
         // A la création d'un utilisateur les champs create et upload seront ajouté automatiquement
         $this->createAt = new \DateTimeImmutable();
         $this->updateAt = new \DateTimeImmutable();
-
-        // Mettre le statut a false au depart ce statut permet de savoir si l'email a été verifié ou pas
-        $this->status = false;
 
         $this->articles = new ArrayCollection();
         $this->appointments = new ArrayCollection();

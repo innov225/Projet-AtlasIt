@@ -71,7 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $updateAt;
+    private $uploatAt;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -112,10 +112,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // A la création d'un utilisateur les champs create et upload seront ajouté automatiquement
         $this->createAt = new \DateTimeImmutable();
-        $this->updateAt = new \DateTimeImmutable();
-
-        // Mettre le statut a false au depart ce statut permet de savoir si l'email a été verifié ou pas
-        $this->status = false;
+        $this->uploatAt = new \DateTimeImmutable();
 
         $this->articles = new ArrayCollection();
         $this->appointments = new ArrayCollection();
@@ -284,14 +281,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getupdateAt(): ?\DateTimeImmutable
+    public function getUploatAt(): ?\DateTimeImmutable
     {
-        return $this->updateAt;
+        return $this->uploatAt;
     }
 
-    public function setupdateAt(\DateTimeImmutable $updateAt): self
+    public function setUploatAt(\DateTimeImmutable $uploatAt): self
     {
-        $this->updateAt = $updateAt;
+        $this->uploatAt = $uploatAt;
 
         return $this;
     }

@@ -114,9 +114,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->createAt = new \DateTimeImmutable();
         $this->updateAt = new \DateTimeImmutable();
 
-        // Mettre le statut a false au depart ce statut permet de savoir si l'email a été verifié ou pas
-        $this->status = false;
-
         $this->articles = new ArrayCollection();
         $this->appointments = new ArrayCollection();
         $this->souscriptions = new ArrayCollection();

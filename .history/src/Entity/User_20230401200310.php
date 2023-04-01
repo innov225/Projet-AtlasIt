@@ -59,11 +59,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $country;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $status;
-
-    /**
      * @ORM\Column(type="datetime_immutable")
      */
     private $createAt;
@@ -113,9 +108,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // A la création d'un utilisateur les champs create et upload seront ajouté automatiquement
         $this->createAt = new \DateTimeImmutable();
         $this->updateAt = new \DateTimeImmutable();
-
-        // Mettre le statut a false au depart ce statut permet de savoir si l'email a été verifié ou pas
-        $this->status = false;
 
         $this->articles = new ArrayCollection();
         $this->appointments = new ArrayCollection();
@@ -256,18 +248,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCountry(string $country): self
     {
         $this->country = $country;
-
-        return $this;
-    }
-
-    public function isStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(bool $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }

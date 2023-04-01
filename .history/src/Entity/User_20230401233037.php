@@ -107,6 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isNotification;
+    
 
     public function __construct()
     {
