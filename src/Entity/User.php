@@ -98,6 +98,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $avis;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $emailConfirmationToken;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isNotification;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -407,6 +417,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $avi->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmailConfirmationToken(): ?string
+    {
+        return $this->emailConfirmationToken;
+    }
+
+    public function setEmailConfirmationToken(?string $emailConfirmationToken): self
+    {
+        $this->emailConfirmationToken = $emailConfirmationToken;
+
+        return $this;
+    }
+
+    public function isIsNotification(): ?bool
+    {
+        return $this->isNotification;
+    }
+
+    public function setIsNotification(?bool $isNotification): self
+    {
+        $this->isNotification = $isNotification;
 
         return $this;
     }
